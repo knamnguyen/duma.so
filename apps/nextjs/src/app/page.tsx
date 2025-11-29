@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useUser, SignInButton } from '@clerk/nextjs';
 import { BottomNav } from '~/components/BottomNav';
 import { SwipeFeed } from '~/components/SwipeFeed';
 import { MyActivities } from '~/components/MyActivities';
@@ -15,6 +16,20 @@ import Image from 'next/image';
 export default function HomePage() {
   const [currentTab, setCurrentTab] = useState('home');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const { isSignedIn, isLoaded } = useUser();
+
+  const handleCreateActivityClick = () => {
+    if (!isLoaded) return; // Wait for auth to load
+    
+    if (!isSignedIn) {
+      // User is not logged in - Clerk will handle showing the sign-in modal
+      // We'll use SignInButton to trigger the modal
+      return;
+    }
+    
+    // User is logged in - open create activity modal
+    setIsCreateModalOpen(true);
+  };
 
   const renderContent = () => {
     switch (currentTab) {
@@ -44,14 +59,24 @@ export default function HomePage() {
             </div>
             <h1 className="text-2xl font-bold text-foreground">Duma</h1>
           </div>
-          <Button
-            size="sm"
-            onClick={() => setIsCreateModalOpen(true)}
-            className="gap-2"
-          >
-            <Plus className="h-4 w-4" />
-            Create Activity
-          </Button>
+          {isLoaded && !isSignedIn ? (
+            <SignInButton mode="modal">
+              <Button size="sm" className="gap-2">
+                <Plus className="h-4 w-4" />
+                Create Activity
+              </Button>
+            </SignInButton>
+          ) : (
+            <Button
+              size="sm"
+              onClick={handleCreateActivityClick}
+              className="gap-2"
+              disabled={!isLoaded}
+            >
+              <Plus className="h-4 w-4" />
+              Create Activity
+            </Button>
+          )}
         </div>
       </header>
 

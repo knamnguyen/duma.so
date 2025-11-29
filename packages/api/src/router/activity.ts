@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { activityCreateSchema, activityListSchema } from "@sassy/validators";
 
-import { protectedProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 import { fetchUnsplashImages } from "../utils/unsplash";
 
 export const activityRouter = {
@@ -85,8 +85,9 @@ export const activityRouter = {
   /**
    * List activities for SwipeFeed
    * Returns future activities ordered by date
+   * Public - anyone can view activities
    */
-  list: protectedProcedure
+  list: publicProcedure
     .input(activityListSchema.optional())
     .query(async ({ ctx, input }) => {
       try {
