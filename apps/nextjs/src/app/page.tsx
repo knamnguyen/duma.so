@@ -1,47 +1,49 @@
 "use client";
 
-import { useState } from 'react';
-import { Plus } from 'lucide-react';
-import { useUser, SignInButton } from '@clerk/nextjs';
-import { BottomNav } from '~/components/BottomNav';
-import { SwipeFeed } from '~/components/SwipeFeed';
-import { MyActivities } from '~/components/MyActivities';
-import { Profile } from '~/components/Profile';
-import { HostedActivities } from '~/components/HostedActivities';
-import { Chat } from '~/components/Chat';
-import { CreateActivityForm } from '~/components/CreateActivityForm';
-import { Button } from '@sassy/ui/button';
-import Image from 'next/image';
+import { useState } from "react";
+import Image from "next/image";
+import { SignInButton, useUser } from "@clerk/nextjs";
+import { Plus } from "lucide-react";
+
+import { Button } from "@sassy/ui/button";
+
+import { BottomNav } from "~/components/BottomNav";
+import { Chat } from "~/components/Chat";
+import { CreateActivityForm } from "~/components/CreateActivityForm";
+import { HostedActivities } from "~/components/HostedActivities";
+import { MyActivities } from "~/components/MyActivities";
+import { Profile } from "~/components/Profile";
+import { SwipeFeed } from "~/components/SwipeFeed";
 
 export default function HomePage() {
-  const [currentTab, setCurrentTab] = useState('home');
+  const [currentTab, setCurrentTab] = useState("home");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const { isSignedIn, isLoaded } = useUser();
 
   const handleCreateActivityClick = () => {
     if (!isLoaded) return; // Wait for auth to load
-    
+
     if (!isSignedIn) {
       // User is not logged in - Clerk will handle showing the sign-in modal
       // We'll use SignInButton to trigger the modal
       return;
     }
-    
+
     // User is logged in - open create activity modal
     setIsCreateModalOpen(true);
   };
 
   const renderContent = () => {
     switch (currentTab) {
-      case 'home':
+      case "home":
         return <SwipeFeed />;
-      case 'create':
+      case "create":
         return <HostedActivities />;
-      case 'activities':
+      case "activities":
         return <MyActivities />;
-      case 'profile':
+      case "profile":
         return <Profile />;
-      case 'chat':
+      case "chat":
         return <Chat />;
       default:
         return <SwipeFeed />;
@@ -49,15 +51,15 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-16">
+    <div className="bg-background min-h-screen pb-16">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-screen-xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="bg-background/80 border-border sticky top-0 z-10 border-b backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-lg">D</span>
+            <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-full">
+              <span className="text-lg font-bold text-white">D</span>
             </div>
-            <h1 className="text-2xl font-bold text-foreground">Duma</h1>
+            <h1 className="text-foreground text-2xl font-bold">Duma</h1>
           </div>
           {isLoaded && !isSignedIn ? (
             <SignInButton mode="modal">
@@ -81,9 +83,7 @@ export default function HomePage() {
       </header>
 
       {/* Main Content */}
-      <main>
-        {renderContent()}
-      </main>
+      <main>{renderContent()}</main>
 
       {/* Bottom Navigation */}
       <BottomNav currentTab={currentTab} onTabChange={setCurrentTab} />
