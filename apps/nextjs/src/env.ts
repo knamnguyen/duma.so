@@ -17,10 +17,10 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     DIRECT_URL: z.string().url(),
     CLERK_WEBHOOK_SECRET: z.string(),
-    SUPABASE_URL: z.string().url(),
-    SUPABASE_SECRET_KEY: z.string(),
-    REPLICATE_API_TOKEN: z.string(),
-    APIFY_API_TOKEN: z.string(),
+    // SUPABASE_URL: z.string().url(),
+    // SUPABASE_SECRET_KEY: z.string(),
+    // REPLICATE_API_TOKEN: z.string(),
+    // APIFY_API_TOKEN: z.string(),
   },
 
   /**
@@ -29,9 +29,9 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
-    NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string(),
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
+    // NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
+    // NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string(),
+    // NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -40,10 +40,10 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    // NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    // NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
+    //   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+    // NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
   skipValidation:
     !!process.env.CI || process.env.npm_lifecycle_event === "lint",

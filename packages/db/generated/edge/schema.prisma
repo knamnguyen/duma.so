@@ -36,7 +36,7 @@ model User {
   accessType           AccessType @default(FREE)
   stripeUserProperties Json?
   dailyAIcomments      Int        @default(0)
-  creditConsumed       Int        @default(0)
+  creditConsumed       Int        @default(-2)
   createdAt            DateTime   @default(now())
   updatedAt            DateTime   @updatedAt
 }
