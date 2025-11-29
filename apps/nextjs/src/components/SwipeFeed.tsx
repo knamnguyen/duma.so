@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Heart, X } from "lucide-react";
+import { Handshake, X } from "lucide-react";
 
 import type { RouterOutputs } from "@sassy/api";
 import { Button } from "@sassy/ui/button";
@@ -76,6 +76,11 @@ export const SwipeFeed = () => {
   const [swipedActivityIds, setSwipedActivityIds] = useState<string[]>([]);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [lastActivityIds, setLastActivityIds] = useState<string>("");
+  // Touch gesture tracking
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
+    null,
+  );
+  const [isDragging, setIsDragging] = useState(false);
 
   const trpc = useTRPC();
   const {
@@ -261,6 +266,77 @@ export const SwipeFeed = () => {
     }, 300);
   };
 
+  // Touch gesture handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setIsDragging(false);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    // Only start dragging if horizontal movement is clearly dominant
+    // This prevents interference with vertical scrolling inside ActivityCard
+    // Require at least 15px horizontal movement and horizontal must be > 1.5x vertical
+    if (absDeltaX > 15 && absDeltaX > absDeltaY * 1.5) {
+      if (!isDragging) {
+        setIsDragging(true);
+      }
+      // Update drag offset for visual feedback
+      setDragOffset({ x: deltaX, y: 0 });
+      // Prevent scrolling when swiping horizontally
+      e.preventDefault();
+    } else if (absDeltaY > absDeltaX) {
+      // User is scrolling vertically - reset and allow normal scroll
+      if (isDragging) {
+        setDragOffset({ x: 0, y: 0 });
+        setIsDragging(false);
+        setTouchStart(null);
+      }
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart) {
+      return;
+    }
+
+    const touch = e.changedTouches[0];
+    if (!touch) {
+      setTouchStart(null);
+      setIsDragging(false);
+      return;
+    }
+
+    const deltaX = touch.clientX - touchStart.x;
+    const absDeltaX = Math.abs(deltaX);
+    const SWIPE_THRESHOLD = 100; // Minimum distance to trigger swipe
+
+    // Only trigger swipe if we were actually dragging horizontally
+    if (isDragging && absDeltaX >= SWIPE_THRESHOLD) {
+      const liked = deltaX > 0; // Swipe right = like, swipe left = reject
+      handleSwipe(liked);
+    } else if (isDragging) {
+      // Snap back to center if threshold not met
+      setDragOffset({ x: 0, y: 0 });
+    }
+
+    // Reset touch state
+    setTouchStart(null);
+    setIsDragging(false);
+  };
+
   if (!currentActivity || !currentHost) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -306,9 +382,15 @@ export const SwipeFeed = () => {
           style={{
             transform: `translateX(${dragOffset.x}px) rotate(${rotation}deg)`,
             opacity: Math.max(opacity, 0.5),
-            transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+            transition: isDragging
+              ? "none"
+              : "transform 0.3s ease-out, opacity 0.3s ease-out",
             zIndex: 10,
+            touchAction: isDragging ? "none" : "pan-y", // Allow vertical scrolling when not dragging
           }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <ActivityCard
             activity={currentActivity}
@@ -321,19 +403,17 @@ export const SwipeFeed = () => {
       {/* Sticky Swipe Actions */}
       <div className="fixed bottom-24 left-1/2 z-40 flex -translate-x-1/2 gap-6">
         <Button
-          size="lg"
           variant="outline"
-          className="bg-background hover:bg-destructive/10 hover:border-destructive hover:text-destructive h-16 w-16 rounded-full border-2 shadow-lg"
+          className="hover:bg-destructive/10 hover:border-destructive hover:text-destructive border-border bg-background text-foreground h-16 w-16 rounded-full border-2 p-0 shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
           onClick={() => handleSwipe(false)}
         >
-          <X className="h-8 w-8" />
+          <X className="h-8 w-8 stroke-current stroke-2" />
         </Button>
         <Button
-          size="lg"
-          className="bg-primary hover:bg-primary/90 h-16 w-16 rounded-full shadow-lg"
+          className="border-primary hover:bg-primary/90 h-16 w-16 rounded-full border-2 p-0 shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
           onClick={() => handleSwipe(true)}
         >
-          <Heart className="h-8 w-8 fill-white" />
+          <Handshake className="h-8 w-8 stroke-current stroke-2" />
         </Button>
       </div>
     </div>

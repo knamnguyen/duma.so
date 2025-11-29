@@ -11,12 +11,12 @@ export const Profile = () => {
     <div className="min-h-[calc(100vh-8rem)] px-4 py-8">
       <div className="max-w-lg mx-auto space-y-6">
         {/* Profile Header */}
-        <Card className="overflow-hidden border-0 shadow-lg">
+        <Card className="overflow-hidden border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <div className="relative h-48 bg-gradient-to-br from-primary via-primary/80 to-secondary" />
           
           <div className="px-6 pb-6">
             <div className="relative -mt-16 mb-4">
-              <Avatar className="h-32 w-32 border-4 border-background shadow-xl">
+              <Avatar className="h-32 w-32 border-4 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                 <AvatarImage src={currentUser.profilePhoto} alt={currentUser.name} />
                 <AvatarFallback>{currentUser.name[0]}</AvatarFallback>
               </Avatar>
@@ -53,7 +53,7 @@ export const Profile = () => {
                     <Badge 
                       key={interest} 
                       variant="secondary"
-                      className="bg-primary/10 text-primary hover:bg-primary/20"
+                      className="bg-primary/10 text-primary hover:bg-primary/20 border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
                     >
                       {interest}
                     </Badge>
@@ -66,15 +66,15 @@ export const Profile = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
-          <Card className="p-4 text-center border-0 shadow-md">
+          <Card className="p-4 text-center border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
             <div className="text-2xl font-bold text-primary">12</div>
             <div className="text-sm text-muted-foreground">Activities</div>
           </Card>
-          <Card className="p-4 text-center border-0 shadow-md">
+          <Card className="p-4 text-center border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
             <div className="text-2xl font-bold text-primary">48</div>
             <div className="text-sm text-muted-foreground">Connections</div>
           </Card>
-          <Card className="p-4 text-center border-0 shadow-md">
+          <Card className="p-4 text-center border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
             <div className="text-2xl font-bold text-primary">4.9</div>
             <div className="text-sm text-muted-foreground">Rating</div>
           </Card>

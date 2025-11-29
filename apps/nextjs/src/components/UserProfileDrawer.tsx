@@ -23,7 +23,7 @@ export const UserProfileDrawer = ({ user, isOpen, onClose }: UserProfileDrawerPr
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="max-h-[75vh] bg-background">
-        <DrawerHeader className="border-b border-border">
+        <DrawerHeader className="border-b-2 border-border">
           <DrawerTitle className="text-left text-foreground">{user.name}'s Profile</DrawerTitle>
         </DrawerHeader>
         
@@ -77,7 +77,7 @@ export const UserProfileDrawer = ({ user, isOpen, onClose }: UserProfileDrawerPr
                     return (
                       <Badge 
                         key={interest} 
-                        className={`${colors[idx % colors.length]} border-0 text-xs`}
+                        className={`${colors[idx % colors.length]} border-2 border-border text-xs shadow-[0_1px_2px_rgba(0,0,0,0.05)]`}
                       >
                         {interest}
                       </Badge>
@@ -96,7 +96,7 @@ export const UserProfileDrawer = ({ user, isOpen, onClose }: UserProfileDrawerPr
                 <h3 className="text-sm font-semibold text-foreground mb-3">Past Events</h3>
                 <div className="space-y-2">
                   {user.pastEvents.map((event, index) => (
-                    <div key={index} className="p-3 bg-muted/30 rounded-lg">
+                    <div key={index} className="p-3 bg-muted/30 rounded-lg border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                       <p className="text-sm font-medium text-foreground">{event.title}</p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {event.type} • {event.attendees} attended
@@ -116,7 +116,7 @@ export const UserProfileDrawer = ({ user, isOpen, onClose }: UserProfileDrawerPr
                 <h3 className="text-sm font-semibold text-foreground mb-3">Activity Photos</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {user.activityPhotos.map((photo, index) => (
-                    <div key={index} className="aspect-square rounded-lg overflow-hidden">
+                    <div key={index} className="aspect-square rounded-lg overflow-hidden border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                       <img 
                         src={photo} 
                         alt={`Activity ${index + 1}`}

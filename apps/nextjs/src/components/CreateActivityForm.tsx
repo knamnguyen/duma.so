@@ -268,7 +268,7 @@ export const CreateActivityForm = ({
               )}
             />
 
-            <DialogFooter>
+            <DialogFooter className="!flex-row gap-2 justify-end">
               <Button
                 type="button"
                 variant="outline"
@@ -277,7 +277,10 @@ export const CreateActivityForm = ({
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={createMutation.isPending}>
+              <Button 
+                type="submit" 
+                disabled={createMutation.isPending}
+              >
                 {createMutation.isPending ? "Creating..." : "Create Activity"}
               </Button>
             </DialogFooter>

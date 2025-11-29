@@ -31,7 +31,7 @@ export const ActivityDetailDrawer = ({ activity, host, isOpen, onClose }: Activi
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="max-h-[75vh]">
-        <DrawerHeader className="pb-2">
+        <DrawerHeader className="pb-2 border-b-2 border-border">
           <DrawerTitle className="text-xl">{activity.description}</DrawerTitle>
           <DrawerDescription>Hosted by {host.name}</DrawerDescription>
         </DrawerHeader>
@@ -39,7 +39,7 @@ export const ActivityDetailDrawer = ({ activity, host, isOpen, onClose }: Activi
         <div className="px-4 pb-4 space-y-4 overflow-y-auto max-h-[calc(75vh-180px)]">
           {/* Activity Photo */}
           {activity.activityPhoto && (
-            <div className="w-full h-40 rounded-lg overflow-hidden">
+            <div className="w-full h-40 rounded-lg overflow-hidden border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <img 
                 src={activity.activityPhoto} 
                 alt="Activity" 
@@ -54,12 +54,12 @@ export const ActivityDetailDrawer = ({ activity, host, isOpen, onClose }: Activi
               <MapPin className="h-4 w-4 text-primary" />
               <span>Location</span>
             </div>
-            <div className="p-3 bg-muted rounded-lg">
+            <div className="p-3 bg-muted rounded-lg border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <p className="font-medium text-sm">{activity.locationHiddenAddress}</p>
               <p className="text-xs text-muted-foreground mt-1">{activity.locationHint}</p>
             </div>
             {/* Map placeholder */}
-            <div className="w-full h-32 bg-muted rounded-lg flex items-center justify-center">
+            <div className="w-full h-32 bg-muted rounded-lg flex items-center justify-center border-2 border-border shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <div className="text-center">
                 <MapPin className="h-8 w-8 mx-auto text-muted-foreground mb-1" />
                 <p className="text-xs text-muted-foreground">Map preview</p>

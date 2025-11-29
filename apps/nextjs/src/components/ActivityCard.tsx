@@ -60,7 +60,7 @@ export const ActivityCard = ({
 
   return (
     <>
-      <Card className="relative mx-auto h-[600px] w-full max-w-sm overflow-hidden border-0 shadow-2xl">
+      <Card className="relative mx-auto h-[600px] w-full max-w-sm overflow-hidden border-2 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
         {/* Scrollable Content - Entire Card */}
         <ScrollArea className="h-full">
           <div className="space-y-0">
@@ -75,7 +75,7 @@ export const ActivityCard = ({
 
               {/* Activity Badge */}
               <div className="absolute top-4 left-4">
-                <Badge className="bg-background text-foreground shadow-lg">
+                <Badge className="bg-background text-foreground border-border border-2 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                   <Icon className="mr-1 h-3 w-3" />
                   {activity.activityType}
                 </Badge>
@@ -83,7 +83,7 @@ export const ActivityCard = ({
 
               {/* Spots Badge */}
               <div className="absolute top-4 right-4">
-                <Badge className="bg-background text-foreground shadow-lg">
+                <Badge className="bg-background text-foreground border-border border-2 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
                   {spotsLeft} spots left
                 </Badge>
               </div>
@@ -139,7 +139,7 @@ export const ActivityCard = ({
                     </div>
                     <Progress
                       value={fillPercentage}
-                      className="h-2 bg-white/20"
+                      className="h-2 bg-white/30"
                     />
 
                     {/* Participant Avatars */}
@@ -198,12 +198,13 @@ export const ActivityCard = ({
                       {activity.activityPhotos.map((photo, index) => (
                         <div
                           key={index}
-                          className="relative aspect-square overflow-hidden rounded-lg"
+                          className="relative aspect-square w-full overflow-hidden rounded-lg"
                         >
                           <img
                             src={photo}
                             alt={`Session ${index + 1}`}
-                            className="h-full w-full object-cover transition-transform hover:scale-105"
+                            className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-105"
+                            loading="lazy"
                           />
                         </div>
                       ))}

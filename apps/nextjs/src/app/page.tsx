@@ -53,11 +53,16 @@ export default function HomePage() {
   return (
     <div className="bg-background min-h-screen pb-16">
       {/* Header */}
-      <header className="bg-background/80 border-border sticky top-0 z-10 border-b backdrop-blur-xl">
+      <header className="bg-background/80 border-border sticky top-0 z-10 border-b-2 shadow-[0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-full">
-              <span className="text-lg font-bold text-white">D</span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full">
+              <Image
+                src="/engagekit-logo.png"
+                alt="Duma"
+                width={40}
+                height={40}
+              />
             </div>
             <h1 className="text-foreground text-2xl font-bold">Duma</h1>
           </div>
