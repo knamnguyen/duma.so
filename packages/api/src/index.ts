@@ -47,6 +47,3 @@ type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export { createTRPCContext, appRouter, createCaller };
 export type { AppRouter, RouterInputs, RouterOutputs };
-
-// Export rescanSubmission for cron jobs
-export { rescanSubmission } from "./router/social";

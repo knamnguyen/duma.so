@@ -11,7 +11,6 @@ const isPublicRoute = createRouteMatcher([
   "/extension-auth(.*)", // Allow extension auth page to be public
   "/api/webhooks/stripe", // Allow Stripe webhooks
   "/api/webhooks/clerk", // Allow Clerk webhooks
-  "/api/cron(.*)", // Allow cron jobs to bypass authentication
   "/dashboard",
   "social-referral",
   // Generation routes are protected - removed from public routes
