@@ -6,15 +6,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { ThemeProvider } from "@sassy/ui/theme";
 import { Toaster } from "@sassy/ui/toast";
+import { Toaster as Sonner } from "@sassy/ui/sonner";
 import { cn } from "@sassy/ui/utils";
 
-import AppHeader from "~/app/_components/app-header";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/app/globals.css";
 
 import { env } from "~/env";
-import { HowItWorksDrawer } from "./_components/how-it-works-drawer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -24,13 +23,13 @@ export const metadata: Metadata = {
         ? `https://${env.VERCEL_URL}`
         : "http://localhost:3000",
   ),
-  title: "Gifavatar",
-  description: "Create animated avatars and lovable landing pages with AI",
+  title: "Duma",
+  description: "Discover and join activities with like-minded people",
   openGraph: {
-    title: "Gifavatar",
-    description: "Create animated avatars and lovable landing pages with AI",
-    url: "https://gifavatar.app",
-    siteName: "Gifavatar",
+    title: "Duma",
+    description: "Discover and join activities with like-minded people",
+    url: "https://duma.app",
+    siteName: "Duma",
     images: [
       {
         url: "/preview-meta.png",
@@ -77,11 +76,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <ClerkProvider afterSignOutUrl="/">
           <ThemeProvider attribute="class" defaultTheme="light">
             <TRPCReactProvider>
-              <AppHeader />
               {props.children}
-              <HowItWorksDrawer />
             </TRPCReactProvider>
             <Toaster />
+            <Sonner />
             <Analytics />
             <SpeedInsights />
           </ThemeProvider>

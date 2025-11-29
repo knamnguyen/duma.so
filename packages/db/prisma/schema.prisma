@@ -35,10 +35,16 @@ model User {
   stripeCustomerId     String?    @unique
   accessType           AccessType @default(FREE)
   stripeUserProperties Json?
+  /// @deprecated Legacy Gif Avatar feature - used by editor router
   dailyAIcomments      Int        @default(0)
+  /// @deprecated Legacy Gif Avatar feature - used by editor and social routers for credit system
   creditConsumed       Int        @default(-2)
   createdAt            DateTime   @default(now())
   updatedAt            DateTime   @updatedAt
+
+  // Relations
+  hostedActivities Activity[]     @relation("HostedActivities")
+  participations   Participant[]   @relation("Participations")
 }
 
 enum AccessType {
@@ -48,6 +54,29 @@ enum AccessType {
   YEARLY
 }
 
+enum ActivityType {
+  WORKDATE
+  STUDYDATE
+  HANGOUT
+  SPORTS
+  EVENT
+  OTHER
+}
+
+enum ActivityStatus {
+  OPEN
+  FULL
+  CANCELLED
+  COMPLETED
+}
+
+enum ParticipantStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+/// @deprecated Legacy Gif Avatar feature - used by editor router
 /// Minimal asset tracking for Gif Avatar
 model UserUpload {
   id             String   @id @default(cuid())
@@ -61,6 +90,7 @@ model UserUpload {
   @@index([userId])
 }
 
+/// @deprecated Legacy Gif Avatar feature - used by editor router
 model BackgroundRemoved {
   id             String   @id @default(cuid())
   userId         String
@@ -72,6 +102,7 @@ model BackgroundRemoved {
   @@index([sourceUploadId])
 }
 
+/// @deprecated Legacy Gif Avatar feature - used by editor router
 model UserResult {
   id             String   @id @default(cuid())
   userId         String
@@ -83,6 +114,7 @@ model UserResult {
   @@index([sourceUploadId])
 }
 
+/// @deprecated Legacy Social Referral feature - used by social router
 enum SocialPlatform {
   X
   THREADS
@@ -90,6 +122,7 @@ enum SocialPlatform {
   LINKEDIN
 }
 
+/// @deprecated Legacy Social Referral feature - used by social router
 enum SocialSubmissionStatus {
   VERIFYING
   VALIDATED
@@ -98,6 +131,7 @@ enum SocialSubmissionStatus {
   VALIDATION_FAILED
 }
 
+/// @deprecated Legacy Social Referral feature - used by social router
 model SocialSubmission {
   id                  String                  @id @default(cuid())
   userId              String
@@ -124,4 +158,43 @@ model SocialSubmission {
 
   @@index([userId, status])
   @@index([userId, createdAt])
+}
+
+model Activity {
+  id              String        @id @default(cuid())
+  hostId          String
+  type            ActivityType
+  name            String
+  description     String
+  tags            String[]
+  dateTime        DateTime
+  location        String
+  coverPhoto      String
+  imageUrls       String[]
+  maxParticipants Int           @default(4)
+  status          ActivityStatus @default(OPEN)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  host            User          @relation("HostedActivities", fields: [hostId], references: [id], onDelete: Cascade)
+  participants    Participant[]
+
+  @@index([hostId])
+  @@index([dateTime])
+  @@index([status, dateTime])
+}
+
+model Participant {
+  id          String           @id @default(cuid())
+  userId      String
+  activityId  String
+  status      ParticipantStatus @default(PENDING)
+  joinedAt    DateTime         @default(now())
+
+  user        User             @relation("Participations", fields: [userId], references: [id], onDelete: Cascade)
+  activity    Activity         @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, activityId])
+  @@index([userId])
+  @@index([activityId])
 }

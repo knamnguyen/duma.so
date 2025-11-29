@@ -19,6 +19,7 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     DIRECT_URL: z.string().url(),
     CLERK_WEBHOOK_SECRET: z.string(),
+    UNSPLASH_ACCESS_KEY: z.string().optional(),
     // SUPABASE_URL: z.string().url(),
     // SUPABASE_SECRET_KEY: z.string(),
     // REPLICATE_API_TOKEN: z.string(),

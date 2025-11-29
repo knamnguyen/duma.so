@@ -188,6 +188,31 @@ exports.Prisma.SocialSubmissionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ActivityScalarFieldEnum = {
+  id: 'id',
+  hostId: 'hostId',
+  type: 'type',
+  name: 'name',
+  description: 'description',
+  tags: 'tags',
+  dateTime: 'dateTime',
+  location: 'location',
+  coverPhoto: 'coverPhoto',
+  imageUrls: 'imageUrls',
+  maxParticipants: 'maxParticipants',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ParticipantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  activityId: 'activityId',
+  status: 'status',
+  joinedAt: 'joinedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -235,12 +260,36 @@ exports.SocialSubmissionStatus = exports.$Enums.SocialSubmissionStatus = {
   VALIDATION_FAILED: 'VALIDATION_FAILED'
 };
 
+exports.ActivityType = exports.$Enums.ActivityType = {
+  WORKDATE: 'WORKDATE',
+  STUDYDATE: 'STUDYDATE',
+  HANGOUT: 'HANGOUT',
+  SPORTS: 'SPORTS',
+  EVENT: 'EVENT',
+  OTHER: 'OTHER'
+};
+
+exports.ActivityStatus = exports.$Enums.ActivityStatus = {
+  OPEN: 'OPEN',
+  FULL: 'FULL',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+};
+
+exports.ParticipantStatus = exports.$Enums.ParticipantStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   UserUpload: 'UserUpload',
   BackgroundRemoved: 'BackgroundRemoved',
   UserResult: 'UserResult',
-  SocialSubmission: 'SocialSubmission'
+  SocialSubmission: 'SocialSubmission',
+  Activity: 'Activity',
+  Participant: 'Participant'
 };
 
 /**

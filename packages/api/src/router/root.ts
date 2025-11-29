@@ -1,4 +1,5 @@
 import { createTRPCRouter } from "../trpc";
+import { activityRouter } from "./activity";
 import { editorRouter } from "./editor";
 import { socialRouter } from "./social";
 import { stripeRouter } from "./stripe";
@@ -9,6 +10,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   editor: editorRouter,
   social: socialRouter,
+  activity: activityRouter,
 });
 
 // export type definition of API
