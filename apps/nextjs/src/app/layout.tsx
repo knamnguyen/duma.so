@@ -20,7 +20,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
       ? "https://engagekit.io"
-      : "http://localhost:3000",
+      : env.VERCEL_URL
+        ? `https://${env.VERCEL_URL}`
+        : "http://localhost:3000",
   ),
   title: "Gifavatar",
   description: "Create animated avatars and lovable landing pages with AI",
