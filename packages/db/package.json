@@ -1,0 +1,48 @@
+{
+  "name": "@sassy/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "__cmt1": "//info using just in time package export so no need to worry about build step shit",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts",
+    "./generated/*": "./generated/*",
+    "./schema-validators": "./src/schema-validators.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "db:generate": "pnpm with-env prisma generate",
+    "db:push": "pnpm with-env prisma db push --skip-generate",
+    "db:migrate": "pnpm with-env prisma migrate dev",
+    "db:studio": "pnpm with-env prisma studio",
+    "db:zod": "pnpm with-env  prisma generate zod",
+    "dev": "tsc --watch",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "with-env": "dotenv --override -e ../../.env --"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "@sassy/db-edge": "link:generated/edge",
+    "@sassy/db-node": "link:generated/node",
+    "@sassy/validators": "workspace:*",
+    "zod": "catalog:",
+    "zod-prisma-types": "^3.2.4"
+  },
+  "devDependencies": {
+    "@sassy/eslint-config": "workspace:*",
+    "@sassy/prettier-config": "workspace:*",
+    "@sassy/tsconfig": "workspace:*",
+    "dotenv-cli": "^8.0.0",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "prisma": "^6.8.2",
+    "tsx": "^4.19.3",
+    "typescript": "catalog:"
+  },
+  "prettier": "@sassy/prettier-config"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "sassy",
+  "private": true,
+  "engines": {
+    "node": ">=22.11.0",
+    "pnpm": ">=9.6.0"
+  },
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "db:push": "pnpm --filter @sassy/db db:push",
+    "db:studio": "pnpm --filter @sassy/db db:studio",
+    "db:generate": "pnpm --filter @sassy/db db:generate",
+    "dev": "turbo watch dev --continue",
+    "dev:next": "turbo watch dev -F @sassy/nextjs...",
+    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "lint:ws:fix": "pnpm dlx sherif@latest -f",
+    "lint:ws": "pnpm dlx  sherif@latest",
+    "__cmt1": "//info postinstall script is copying the required engine for prisma into the nextjs app server files",
+    "postinstall": "pnpm lint:ws && pnpm db:generate && mkdir -p apps/nextjs/.next/server && cp packages/db/generated/node/libquery_engine-rhel-openssl-3.0.x.so.node apps/nextjs/.next/server/",
+    "typecheck": "turbo run typecheck",
+    "ui-add": "turbo run ui-add",
+    "sync-template": "pnpm --filter @sassy/sync-template start"
+  },
+  "devDependencies": {
+    "@sassy/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.3.4",
+    "prettier": "catalog:",
+    "turbo": "^2.3.4",
+    "typescript": "catalog:"
+  },
+  "prettier": "@sassy/prettier-config",
+  "dependencies": {}
+}

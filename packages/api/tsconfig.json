@@ -1,0 +1,13 @@
+{
+  "extends": "@sassy/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    //preserve jsx because this is a jit package, consuming app will build it later into javascript
+    "jsx": "preserve",
+    "paths": {
+      "@sassy/api/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
